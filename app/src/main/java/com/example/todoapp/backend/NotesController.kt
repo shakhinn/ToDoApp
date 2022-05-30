@@ -1,14 +1,10 @@
 package com.example.todoapp.backend
 
 import android.content.Context
-import android.content.Context.MODE_PRIVATE
 import android.util.Log
-import com.example.todoapp.MainActivity
 import org.json.*
 import java.io.*
-import java.io.BufferedReader;
 import java.io.BufferedWriter
-import java.util.*
 
 class NotesController(context: Context) {
     val context = context

@@ -60,7 +60,7 @@ class MainActivity : AppCompatActivity() {
             listView.adapter = adapter
             when (requestCode) {
                 1 ->{ notesController.addNote(
-                    data.getStringExtra("datesamp").toString(),
+                    data.getStringExtra("datestamp").toString(),
                     data.getStringExtra("text").toString()
                 )
                     adapter.notifyDataSetChanged()
