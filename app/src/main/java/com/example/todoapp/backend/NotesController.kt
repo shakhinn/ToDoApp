@@ -14,23 +14,18 @@ class NotesController(context: Context) {
         try{
             val file = File("data/data/com.example.todoapp/files/database.json")
             val response = file.readText()
-            Log.d("TAG", response)
             if(response != null) {
-                if(response.length != 0) {
+                if(response.isNotEmpty()) {
                     val jsonObject = JSONTokener(response).nextValue() as JSONObject
                     val jsonArray = jsonObject.getJSONArray("note")
 
                     for (i in 0 until jsonArray.length()) {
-                        // кушаем uid
                         val uid = jsonArray.getJSONObject(i).getInt("uid")
 
-                        // кушаем datestamp
                         val datestamp = jsonArray.getJSONObject(i).getString("datestamp")
 
-                        // кушаем text
                         var text = jsonArray.getJSONObject(i).getString("text")
 
-                        // кушаем status
                         var status = jsonArray.getJSONObject(i).getBoolean("status")
 
                         listOfNotes.add(Note(uid, datestamp, text, status))
@@ -39,11 +34,12 @@ class NotesController(context: Context) {
             }
 
         } catch (e: FileNotFoundException){
-            println("Database not found\nEmpty array")
+            Log.e(this.javaClass.name,"Database not found")
         }
     }
 
     fun addNote(date: String, text: String) {
+        Log.d("DebugTag", "Note added")
         val uid: Int = if (listOfNotes.isEmpty()) {
             0
         } else {
@@ -54,6 +50,7 @@ class NotesController(context: Context) {
     }
 
     fun deleteNote(id: Int) {
+        Log.d("DebugTag", "Note deleted")
         if (listOfNotes.isNotEmpty()) {
             for (note in listOfNotes) {
                 if (note.uid == id) {
@@ -65,31 +62,8 @@ class NotesController(context: Context) {
         }
     }
 
-    fun editText(id: Int, newText: String) {
-        if (listOfNotes.isNotEmpty()) {
-            for (note in listOfNotes) {
-                if (note.uid == id) {
-                    note.text = newText
-                    break
-                }
-            }
-            save()
-        }
-    }
-
-    fun editStatus(id: Int, newStatus: Boolean) {
-        if (listOfNotes.isNotEmpty()) {
-            for (note in listOfNotes) {
-                if (note.uid == id) {
-                    note.status = newStatus
-                    break
-                }
-            }
-            save()
-        }
-    }
-
     fun edit(id: Int, newText: String, newDate: String){
+        Log.d("DebugTag", "Note $id edited")
         if (listOfNotes.isNotEmpty()) {
             for (note in listOfNotes) {
                 if (note.uid == id) {
@@ -107,13 +81,13 @@ class NotesController(context: Context) {
             val fos = BufferedWriter(OutputStreamWriter(context.openFileOutput("database.json", Context.MODE_PRIVATE)))
             fos.write(this.toString())
             fos.close()
-            Log.d("TAG", "записал")
+            Log.d("DebugTag", "Data saved")
         }
         catch (e:FileNotFoundException){
-            Log.d("TAG", "не записал")
+            Log.d("DebugTag", "Data not saved")
         }
         catch (e: IOException){
-            Log.d("TAG", "не записал")
+            Log.d("DebugTag", "Data not saved")
         }
     }
 

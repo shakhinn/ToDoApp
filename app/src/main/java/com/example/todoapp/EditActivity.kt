@@ -4,6 +4,7 @@ import android.content.Intent
 import android.icu.util.Calendar
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.widget.Button
 import android.widget.DatePicker
 import android.widget.EditText
@@ -34,20 +35,27 @@ class EditActivity : AppCompatActivity() {
                 today.set(year, monthOfYear, dayOfMonth)
                 dateStr = inputSDF.format(today.time)
             }
+        } else {
+            Log.e(this.javaClass.name, "Empty args")
         }
 
         ok.setOnClickListener{
+            Log.d("DebugTag", "ok button is clicked")
             val intent = Intent()
             intent.putExtra("text", editT.text.toString())
+            Log.d("DebugTag", editT.text.toString())
             intent.putExtra("date", dateStr)
+            Log.d("DebugTag", dateStr)
             if (args != null) {
                 intent.putExtra("uid", args.getInt("id"))
+                Log.d("DebugTag", args.getInt("id").toString())
             }
             setResult(2, intent)
             finish()
         }
 
         neok.setOnClickListener{
+            Log.d("DebugTag", "Cancel button is clicked")
             finish()
         }
 

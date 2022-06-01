@@ -22,7 +22,7 @@ class MainActivity : AppCompatActivity() {
         listView.adapter = adapter
 
         listView.setOnItemClickListener { parent, view, position, id ->
-            Log.d("TAG", "edit button is clicked")
+            Log.d("DebugTag", "edit button is clicked")
             val editIntent = Intent(this, EditActivity::class.java)
             editIntent.putExtra("id", notesController.listOfNotes[position].uid)
             editIntent.putExtra("date", notesController.listOfNotes[position].datestamp)
@@ -33,7 +33,7 @@ class MainActivity : AppCompatActivity() {
 
 
         listView.setOnItemLongClickListener { parent, view, position, id ->
-            Log.d("TAG", "delete button is clicked")
+            Log.d("DebugTag", "delete button is clicked")
             val deleteIntent = Intent(this, DeleteActivity::class.java)
             deleteIntent.putExtra("id", notesController.listOfNotes[position].uid)
             startActivityForResult(deleteIntent, 3)
@@ -43,7 +43,7 @@ class MainActivity : AppCompatActivity() {
         val addButton: Button = findViewById(R.id.addButton)
 
         addButton.setOnClickListener{
-            Log.d("TAG", "add button is clicked")
+            Log.d("DebugTag", "add button is clicked")
             val addIntent = Intent(this, AddActivity::class.java)
             startActivityForResult(addIntent, 1)
 
@@ -83,6 +83,8 @@ class MainActivity : AppCompatActivity() {
                 }
 
             }
+        } else {
+            Log.e(this.javaClass.name, "Empty data from Activity")
         }
 
     }

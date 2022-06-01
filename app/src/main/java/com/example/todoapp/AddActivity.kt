@@ -4,6 +4,7 @@ import android.content.Intent
 import android.icu.util.Calendar
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.widget.Button
 import android.widget.DatePicker
 import android.widget.EditText
@@ -32,13 +33,17 @@ class AddActivity : AppCompatActivity() {
         }
 
         addButton.setOnClickListener {
+            Log.d("DebugTag", "Note is added")
             val intent = Intent()
             intent.putExtra("text", editTextNote.text.toString())
+            Log.d("DebugTag", editTextNote.text.toString())
             intent.putExtra("datestamp", dateStr)
+            Log.d("DebugTag", dateStr)
             setResult(1, intent)
             finish()
         }
         exitButton.setOnClickListener{
+            Log.d("DebugTag", "Cancel button was clicked")
             finish()
         }
     }

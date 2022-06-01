@@ -2,6 +2,7 @@ package com.example.todoapp
 
 import android.content.Context
 import android.graphics.Paint
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -44,23 +45,25 @@ open class NotesAdapter(context: Context, resource: Int, listOfNotes: MutableLis
         holder.date.text = note.datestamp
         holder.checkBox.isChecked = note.status
         if(holder.checkBox.isChecked){
-            holder.noteText.paintFlags = holder.noteText.paintFlags.or(Paint.STRIKE_THRU_TEXT_FLAG) // тут побитовые операции вкл зачеркнутый
+            holder.noteText.paintFlags = holder.noteText.paintFlags.or(Paint.STRIKE_THRU_TEXT_FLAG)
             holder.date.paintFlags = holder.date.paintFlags.or(Paint.STRIKE_THRU_TEXT_FLAG)
         }
         else{
-            holder.noteText.paintFlags = holder.noteText.paintFlags.and(Paint.STRIKE_THRU_TEXT_FLAG.inv()) // тут побитовые операции выкл зачеркнутый
+            holder.noteText.paintFlags = holder.noteText.paintFlags.and(Paint.STRIKE_THRU_TEXT_FLAG.inv())
             holder.date.paintFlags = holder.date.paintFlags.and(Paint.STRIKE_THRU_TEXT_FLAG.inv())
         }
 
         holder.checkBox.setOnClickListener {
             if (holder.checkBox.isChecked) {
-                holder.noteText.paintFlags = holder.noteText.paintFlags.or(Paint.STRIKE_THRU_TEXT_FLAG) // тут побитовые операции вкл зачеркнутый
+                Log.d("DebugTag", "note $position true status is set")
+                holder.noteText.paintFlags = holder.noteText.paintFlags.or(Paint.STRIKE_THRU_TEXT_FLAG)
                 holder.date.paintFlags = holder.date.paintFlags.or(Paint.STRIKE_THRU_TEXT_FLAG)
-                listOfNotes[position].status = true  //вот это очень плохо и так нельзя залазить и это ещё и не раотает. Сук. прям походу команды придется писать
+                listOfNotes[position].status = true
             } else {
-                holder.noteText.paintFlags = holder.noteText.paintFlags.and(Paint.STRIKE_THRU_TEXT_FLAG.inv()) // тут побитовые операции выкл зачеркнутый
+                Log.d("DebugTag", "note $position false status is set")
+                holder.noteText.paintFlags = holder.noteText.paintFlags.and(Paint.STRIKE_THRU_TEXT_FLAG.inv())
                 holder.date.paintFlags = holder.date.paintFlags.and(Paint.STRIKE_THRU_TEXT_FLAG.inv())
-                listOfNotes[position].status = false //алогично
+                listOfNotes[position].status = false
             }
         }
 
